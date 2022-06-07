@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ksmart.mybatis.mapper.ProductMapper">
+	<select id="getProductList"  resultType="Goods">
+		SELECT
+			g.g_code		as gCode
+			,g.g_name		as gName
+			,g.g_price		as gPrice
+			,g.g_seller_id	as gSellerId
+			,g.g_reg_date	as gRegDate
+		FROM
+			tb_goods AS g
+	</select>
+	<insert id="addProduct" parameterType="Goods">
+		INSERT INTO tb_goods
+			(g_code
+			,g_name
+			,g_price
+			,g_seller_id
+			,g_reg_date)
+		VALUES (
+			sf_goods_gCode()
+			,#{gName}
+			,#{gPrice}
+			,#{gSellerId}
+			,curdate()
+		);
+	</insert>
+</mapper>

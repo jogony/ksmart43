@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/default}">
+
+
+	<th:block layout:fragment="customScript">
+		<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+		<script>
+			
+			$(function() {
+				/*
+				$('#removeBtn').click(function() {
+				  	var result = confirm('Are you sure you want to do this?');
+			        if(result) {
+			        	console.log(result + 'true!!!');
+			        	if($('#password').val() != 'undefined' && $('#password').val() != null && $('#password').val() != ''){
+			        		console.log('비밀번호 씀');
+			        		console.log($('#password').val()+'밸류값');
+			        		$("#removeForm").submit();
+			        	} else {
+			        		alert('비밀번호를 입력해주세요');
+			        		return false;
+			        	}
+			        } else {
+			            //no
+			            console.log(result);
+			        }
+				});
+				*/
+				$('#removeBtn').click(function() {
+		        	if($('#password').val() == 'undefined' || $('#password').val() == null || $('#password').val() == ''){
+		        		console.log($('#password').val() +'밸류값');
+		        		alert('비밀번호를 입력해주세요');
+		        		return false
+		        	} else {
+				  		var result = confirm('Are you sure you want to do this?');
+			            //no
+			            console.log(result);
+			            if(result) {
+			            	$("#removeForm").submit();
+			            }
+			        }
+				});
+				
+			})
+		</script>
+	</th:block>
+	<!-- 사용자 정의 css -->
+
+
+	<th:block layout:fragment="custom">
+		<form id = "removeForm" th:action="@{/member/removeMember}" method="post">
+			<table border="1">
+				<tbody>
+					<tr>
+						<td>회원아이디</td>
+						<td>
+							<input type="text" name="memberId" th:value=${memberId} readonly="readonly">
+						</td>
+					</tr>
+					<tr>
+						<td>회원비밀번호</td>
+						<td>
+							<input type="text" id="password" name="memberPw" th:value=${memberPw} placeholder="회원의 비밀번호를 입력해주세요">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" >
+							<button type="button" id="removeBtn" style="width: 100%;">회원탈퇴</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		<div th:if="${not #strings.isEmpty(result)}">
+			<p th:text="${result}"></p>
+		</div>
+		
+	</th:block>
+
+
+</html>
